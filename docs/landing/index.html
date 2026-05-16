@@ -5,23 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Guardiao 60+: sistema familiar de seguranca e cuidado remoto para idosos com GPS, SOS, alertas e rotina inteligente."
+      content="Guardiao 60+: plataforma de seguranca familiar para idosos com GPS 4G, SOS, rotina inteligente, alertas e consentimento LGPD."
     />
-    <title>Guardiao 60+ | Cuidado remoto para idosos</title>
+    <title>Guardiao 60+ | Segurança familiar para idosos</title>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap");
+
       :root {
-        --forest: #001f14;
-        --forest-2: #062d1e;
-        --green: #08884f;
-        --green-2: #0aa865;
-        --mint: #e9f7f0;
-        --gold: #f1a83b;
-        --ink: #10221b;
-        --muted: #5b6d65;
-        --line: #e1e9e5;
-        --surface: #ffffff;
-        --soft: #f7faf8;
-        font-family: "Aptos", "Segoe UI", Tahoma, sans-serif;
+        --navy: #06233d;
+        --navy-2: #0a3155;
+        --blue: #0ea5e9;
+        --cyan: #38bdf8;
+        --ice: #f0f9ff;
+        --white: #ffffff;
+        --ink: #082f49;
+        --muted: #4b6474;
+        --line: #d7e7f0;
+        --orange: #f97316;
+        --amber: #f59e0b;
+        --safe: #0f766e;
+        --shadow: 0 24px 80px rgba(8, 47, 73, 0.16);
+        font-family: "Source Sans 3", system-ui, sans-serif;
+        color: var(--ink);
+        background: var(--ice);
       }
 
       * {
@@ -34,8 +40,7 @@
 
       body {
         margin: 0;
-        color: var(--ink);
-        background: var(--surface);
+        overflow-x: hidden;
       }
 
       a {
@@ -44,280 +49,482 @@
       }
 
       .container {
-        width: min(1180px, calc(100% - 40px));
+        width: min(1180px, calc(100% - 36px));
         margin: 0 auto;
       }
 
+      .skip {
+        position: absolute;
+        left: -999px;
+      }
+
+      .skip:focus {
+        left: 18px;
+        top: 18px;
+        z-index: 100;
+        background: var(--white);
+        padding: 12px 16px;
+        border-radius: 10px;
+        outline: 4px solid var(--cyan);
+      }
+
       .nav-wrap {
-        background: var(--forest);
-        color: #fff;
-        position: sticky;
-        top: 0;
+        position: fixed;
+        top: 16px;
+        left: 0;
+        right: 0;
         z-index: 50;
+        pointer-events: none;
       }
 
       .nav {
-        height: 76px;
+        min-height: 68px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 28px;
+        gap: 24px;
+        padding: 10px 12px 10px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 20px;
+        background: rgba(6, 35, 61, 0.76);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 18px 60px rgba(6, 35, 61, 0.22);
+        color: var(--white);
+        pointer-events: auto;
       }
 
       .logo {
         display: flex;
         align-items: center;
-        gap: 10px;
-        font-weight: 900;
-        font-size: 25px;
+        gap: 12px;
+        font-family: "Lexend", sans-serif;
+        font-size: 22px;
+        font-weight: 800;
       }
 
       .logo-mark {
-        width: 31px;
-        height: 31px;
-        border-radius: 9px;
-        background: linear-gradient(135deg, var(--gold), var(--green-2));
+        width: 38px;
+        height: 38px;
+        border-radius: 14px;
         display: grid;
         place-items: center;
-        color: #fff;
-        font-size: 18px;
+        background: linear-gradient(135deg, var(--cyan), var(--safe));
+        box-shadow: 0 10px 30px rgba(56, 189, 248, 0.28);
+      }
+
+      .logo-mark svg,
+      .icon svg {
+        width: 21px;
+        height: 21px;
       }
 
       .nav-links {
         display: flex;
         align-items: center;
-        gap: 28px;
+        gap: 24px;
         font-size: 14px;
-        font-weight: 800;
+        font-weight: 700;
       }
 
       .btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        gap: 9px;
         min-height: 46px;
-        padding: 0 24px;
-        border-radius: 12px;
+        padding: 0 22px;
+        border-radius: 999px;
         border: 1px solid transparent;
-        font-weight: 900;
+        font-weight: 800;
+        font-size: 15px;
         cursor: pointer;
+        transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
       }
 
       .btn-primary {
-        background: var(--green);
-        color: #fff;
+        color: var(--white);
+        background: linear-gradient(135deg, var(--blue), var(--safe));
+        box-shadow: 0 16px 42px rgba(14, 165, 233, 0.28);
       }
 
-      .btn-primary:hover {
-        background: var(--green-2);
+      .btn-warning {
+        color: #fff;
+        background: linear-gradient(135deg, var(--orange), var(--amber));
+        box-shadow: 0 16px 42px rgba(249, 115, 22, 0.24);
       }
 
-      .btn-gold {
-        background: var(--gold);
-        color: #fff;
-      }
-
-      .btn-outline {
-        border-color: rgba(255, 255, 255, 0.36);
-        color: #fff;
+      .btn-ghost {
+        color: var(--white);
+        border-color: rgba(255, 255, 255, 0.34);
+        background: rgba(255, 255, 255, 0.08);
       }
 
       .hero {
-        min-height: 740px;
+        position: relative;
+        min-height: 860px;
+        padding: 154px 0 90px;
+        color: var(--white);
         background:
-          radial-gradient(circle at 75% 42%, rgba(16, 148, 86, 0.28), transparent 28%),
-          linear-gradient(180deg, var(--forest), #002819);
-        color: #fff;
-        display: grid;
-        align-items: center;
-        padding: 58px 0 86px;
+          radial-gradient(circle at 82% 20%, rgba(56, 189, 248, 0.34), transparent 28%),
+          radial-gradient(circle at 14% 62%, rgba(249, 115, 22, 0.16), transparent 26%),
+          linear-gradient(145deg, #06192d 0%, #06365c 54%, #0f766e 100%);
+        overflow: hidden;
       }
 
-      .trust-strip {
-        background: #fff;
-        border-bottom: 1px solid var(--line);
-        padding: 34px 0;
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: -20%;
+        background:
+          linear-gradient(110deg, transparent 0 42%, rgba(255, 255, 255, 0.08) 45%, transparent 48% 100%),
+          linear-gradient(18deg, rgba(255, 255, 255, 0.08), transparent 32%);
+        animation: drift 14s linear infinite;
       }
 
-      .trust-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 18px;
-        align-items: center;
-      }
-
-      .trust-card {
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 20px;
-        min-height: 122px;
-        background: #fff;
-      }
-
-      .trust-card strong {
-        display: block;
-        font-size: 32px;
-        color: var(--forest);
-        margin-bottom: 6px;
-      }
-
-      .trust-card span {
-        color: var(--muted);
-        font-weight: 800;
-      }
-
-      .available {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 24px;
-      }
-
-      .platform-pill {
-        border: 1px solid rgba(255, 255, 255, 0.24);
-        background: rgba(255, 255, 255, 0.08);
-        color: #fff;
-        border-radius: 999px;
-        padding: 9px 13px;
-        font-size: 13px;
-        font-weight: 900;
+      .hero::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 140px;
+        background: linear-gradient(180deg, transparent, var(--ice));
       }
 
       .hero-grid {
+        position: relative;
+        z-index: 2;
         display: grid;
-        grid-template-columns: 1fr 0.96fr;
-        gap: 64px;
+        grid-template-columns: 0.96fr 1.04fr;
+        gap: 54px;
         align-items: center;
       }
 
-      .kicker {
+      .eyebrow {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        color: #b7e8d1;
-        font-size: 13px;
-        font-weight: 900;
-        margin-bottom: 18px;
+        gap: 9px;
+        min-height: 36px;
+        padding: 0 14px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #d8f3ff;
+        font-weight: 800;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Lexend", sans-serif;
+        letter-spacing: 0;
       }
 
       .hero h1 {
-        margin: 0;
-        max-width: 720px;
-        font-size: 58px;
-        line-height: 1.06;
-        letter-spacing: 0;
+        margin: 22px 0 0;
+        font-size: 66px;
+        line-height: 1.02;
+        max-width: 760px;
       }
 
       .hero p {
         margin: 24px 0 0;
-        max-width: 640px;
-        color: #d8eee4;
-        font-size: 18px;
-        line-height: 1.65;
+        max-width: 650px;
+        color: #dff5ff;
+        font-size: 20px;
+        line-height: 1.62;
         font-weight: 600;
       }
 
       .hero-actions {
         display: flex;
-        gap: 14px;
         flex-wrap: wrap;
-        margin-top: 32px;
+        gap: 14px;
+        margin-top: 34px;
       }
 
-      .hero-visual {
-        position: relative;
-        min-height: 470px;
-      }
-
-      .photo-card {
-        position: absolute;
-        inset: 22px 0 0 60px;
-        border-radius: 22px;
-        overflow: hidden;
-        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
-        background: #123;
-      }
-
-      .photo-card img {
-        width: 100%;
-        height: 100%;
-        min-height: 430px;
-        object-fit: cover;
-        display: block;
-      }
-
-      .float-card {
-        position: absolute;
-        z-index: 2;
-        background: #fff;
-        color: var(--ink);
-        border-radius: 8px;
-        padding: 15px 18px;
-        min-width: 230px;
+      .availability {
+        margin-top: 28px;
         display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .pill {
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0 14px;
+        color: #e6f8ff;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .hero-product {
+        position: relative;
+        min-height: 550px;
+        animation: lift 900ms ease both;
+      }
+
+      .dashboard-mock {
+        position: absolute;
+        right: 0;
+        top: 20px;
+        width: min(620px, 100%);
+        min-height: 454px;
+        border-radius: 30px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--ink);
+        box-shadow: 0 32px 110px rgba(3, 19, 34, 0.38);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+
+      .mock-top {
+        height: 62px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(240, 249, 255, 0.74);
+      }
+
+      .mock-dots {
+        display: flex;
+        gap: 8px;
+      }
+
+      .mock-dots span {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--line);
+      }
+
+      .mock-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        padding: 22px;
+      }
+
+      .mini-panel {
+        min-height: 128px;
+        border-radius: 18px;
+        padding: 18px;
+        background: #fff;
+        border: 1px solid var(--line);
+        box-shadow: 0 14px 34px rgba(8, 47, 73, 0.08);
+      }
+
+      .mini-panel.wide {
+        grid-column: 1 / -1;
+      }
+
+      .mini-panel strong {
+        display: block;
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+
+      .big-stat {
+        font-family: "Lexend", sans-serif;
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--navy);
+      }
+
+      .map-card {
+        min-height: 190px;
+        position: relative;
+        overflow: hidden;
+        background:
+          linear-gradient(90deg, rgba(14, 165, 233, 0.12) 1px, transparent 1px),
+          linear-gradient(rgba(14, 165, 233, 0.12) 1px, transparent 1px),
+          #f8fcff;
+        background-size: 34px 34px;
+      }
+
+      .map-pin {
+        position: absolute;
+        left: 55%;
+        top: 42%;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--orange);
+        box-shadow: 0 0 0 12px rgba(249, 115, 22, 0.16);
+        animation: pulse 1.9s ease-in-out infinite;
+      }
+
+      .floating-alert {
+        position: absolute;
+        z-index: 4;
+        width: min(330px, 80%);
+        border-radius: 18px;
+        padding: 18px;
+        display: grid;
+        grid-template-columns: 44px 1fr;
         gap: 12px;
         align-items: center;
-        box-shadow: 0 20px 42px rgba(0, 0, 0, 0.18);
-        font-weight: 900;
+        background: #fff;
+        color: var(--ink);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        box-shadow: 0 24px 60px rgba(8, 47, 73, 0.2);
+        animation: floaty 5s ease-in-out infinite;
       }
 
-      .float-card span {
-        width: 32px;
-        height: 32px;
-        border-radius: 10px;
-        background: #fff3df;
-        color: var(--gold);
+      .floating-alert.one {
+        left: 0;
+        top: 20px;
+      }
+
+      .floating-alert.two {
+        right: -10px;
+        bottom: 8px;
+        animation-delay: 1s;
+      }
+
+      .icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 16px;
         display: grid;
         place-items: center;
+        background: linear-gradient(135deg, #e0f2fe, #ccfbf1);
+        color: var(--blue);
       }
 
-      .float-top {
-        left: 0;
-        top: 0;
+      .floating-alert b {
+        display: block;
+        font-family: "Lexend", sans-serif;
+        margin-bottom: 4px;
       }
 
-      .float-mid {
-        right: -20px;
-        top: 220px;
+      .floating-alert span {
+        color: var(--muted);
+        font-weight: 700;
       }
 
-      .float-bottom {
-        left: 0;
-        bottom: 0;
+      .trust {
+        position: relative;
+        z-index: 3;
+        margin-top: -58px;
       }
 
-      .intro {
-        padding: 88px 0 80px;
+      .trust-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
       }
 
-      .feature-suite {
-        padding: 88px 0;
-        background: #fff;
+      .trust-card {
+        min-height: 130px;
+        border-radius: 22px;
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
       }
 
-      .feature-head {
-        display: flex;
-        justify-content: space-between;
-        gap: 34px;
-        align-items: end;
-        margin-bottom: 34px;
+      .trust-card strong {
+        display: block;
+        font-family: "Lexend", sans-serif;
+        font-size: 34px;
+        color: var(--navy);
+        margin-bottom: 6px;
       }
 
-      .feature-head h2,
-      .concerns h2,
-      .recognition h2 {
+      .trust-card span {
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      section {
+        position: relative;
+      }
+
+      .section-pad {
+        padding: 110px 0;
+      }
+
+      .section-head {
+        max-width: 760px;
+        margin-bottom: 42px;
+      }
+
+      .section-head.center {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+
+      .section-head h2 {
         margin: 0;
-        font-size: 42px;
+        font-size: 46px;
         line-height: 1.12;
-        color: var(--forest);
+        color: var(--navy);
       }
 
-      .feature-head p {
-        max-width: 460px;
+      .section-head p {
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 19px;
+        line-height: 1.68;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 72px;
+        align-items: center;
+      }
+
+      .human-card {
+        position: relative;
+        min-height: 560px;
+      }
+
+      .human-card img {
+        width: 86%;
+        height: 520px;
+        object-fit: cover;
+        border-radius: 34px;
+        box-shadow: var(--shadow);
+      }
+
+      .glass-card {
+        position: absolute;
+        right: 0;
+        bottom: 24px;
+        width: 360px;
+        padding: 24px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(255, 255, 255, 0.92);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(16px);
+      }
+
+      .glass-card h3 {
+        margin: 0 0 12px;
+        color: var(--navy);
+      }
+
+      .glass-card p {
         margin: 0;
         color: var(--muted);
-        line-height: 1.65;
-        font-size: 17px;
+        line-height: 1.58;
       }
 
       .feature-grid {
@@ -327,587 +534,464 @@
       }
 
       .feature-card {
+        position: relative;
+        min-height: 272px;
+        padding: 26px;
+        border-radius: 26px;
+        background: #fff;
         border: 1px solid var(--line);
-        border-radius: 18px;
-        background: var(--soft);
-        padding: 24px;
-        min-height: 248px;
+        box-shadow: 0 18px 48px rgba(8, 47, 73, 0.08);
+        overflow: hidden;
+        transition: transform 240ms ease, box-shadow 240ms ease;
       }
 
-      .feature-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 14px;
-        display: grid;
-        place-items: center;
-        background: var(--mint);
-        color: var(--green);
-        font-weight: 900;
-        margin-bottom: 20px;
+      .feature-card::after {
+        content: "";
+        position: absolute;
+        inset: auto -30% -45% auto;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.2), transparent 68%);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 26px 70px rgba(8, 47, 73, 0.14);
       }
 
       .feature-card h3 {
-        margin: 0 0 10px;
-        font-size: 20px;
+        margin: 22px 0 12px;
+        color: var(--navy);
       }
 
       .feature-card p {
-        color: var(--muted);
-        line-height: 1.58;
-        margin: 0;
-      }
-
-      .concerns {
-        padding: 92px 0;
-        background: var(--soft);
-      }
-
-      .concern-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 18px;
-        margin-top: 34px;
-      }
-
-      .concern-card {
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 26px;
-        min-height: 210px;
-      }
-
-      .concern-card h3 {
-        margin: 0 0 10px;
-        color: var(--forest);
-      }
-
-      .concern-card p {
         margin: 0;
         color: var(--muted);
-        line-height: 1.65;
+        line-height: 1.62;
       }
 
-      .recognition {
-        padding: 82px 0;
-        background: #fff;
-      }
-
-      .media-grid {
-        margin-top: 34px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 18px;
-      }
-
-      .media-card {
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 26px;
-        background: #fff;
-      }
-
-      .media-card strong {
-        display: block;
-        color: var(--green);
-        margin-bottom: 12px;
-      }
-
-      .media-card p {
-        margin: 0;
-        color: var(--ink);
-        line-height: 1.6;
-        font-size: 17px;
-        font-weight: 800;
-      }
-
-      .split {
-        display: grid;
-        grid-template-columns: 0.98fr 1fr;
-        gap: 76px;
-        align-items: center;
-      }
-
-      .image-stack {
-        position: relative;
-        min-height: 500px;
-      }
-
-      .image-stack img {
-        position: absolute;
-        left: 58px;
-        top: 54px;
-        width: 520px;
-        height: 390px;
-        object-fit: cover;
-        border-radius: 0 0 22px 22px;
-        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.16);
-      }
-
-      .mini-card {
-        position: absolute;
-        background: #fff;
-        border-radius: 9px;
-        padding: 18px;
-        box-shadow: 0 20px 42px rgba(0, 0, 0, 0.12);
-        font-weight: 900;
-      }
-
-      .mini-chart {
-        left: 0;
-        top: 10px;
-        width: 245px;
-      }
-
-      .mini-list {
-        right: 0;
-        top: 64px;
-        width: 250px;
-      }
-
-      .mini-med {
-        left: 0;
-        bottom: 54px;
-        width: 310px;
-      }
-
-      .mini-feel {
-        right: 30px;
-        bottom: 0;
-        width: 350px;
-      }
-
-      .line-chart {
-        width: 130px;
-        height: 42px;
-        margin-top: 14px;
-        border-bottom: 3px solid #fac468;
+      .dark-section {
+        color: #fff;
         background:
-          linear-gradient(135deg, transparent 18%, #fac468 19%, #fac468 22%, transparent 23%),
-          linear-gradient(35deg, transparent 42%, #fac468 43%, #fac468 46%, transparent 47%);
+          radial-gradient(circle at 18% 18%, rgba(56, 189, 248, 0.22), transparent 32%),
+          radial-gradient(circle at 82% 62%, rgba(249, 115, 22, 0.12), transparent 30%),
+          linear-gradient(145deg, var(--navy), #03101e);
+        overflow: hidden;
       }
 
-      .intro-copy h2,
-      .section-title h2 {
-        margin: 0;
-        color: #061f16;
-        font-size: 42px;
-        line-height: 1.15;
-        letter-spacing: 0;
+      .dark-section .section-head h2,
+      .dark-section .section-head p {
+        color: #fff;
       }
 
-      .intro-copy p,
-      .section-title p {
-        margin: 22px 0 0;
-        color: var(--muted);
-        font-size: 17px;
-        line-height: 1.75;
-      }
-
-      .text-link {
-        margin-top: 28px;
-        display: inline-flex;
-        gap: 14px;
-        align-items: center;
-        color: var(--green);
-        font-weight: 900;
-      }
-
-      .workflow {
-        padding: 10px 0 96px;
-      }
-
-      .workflow-grid {
+      .risk-grid {
         display: grid;
-        grid-template-columns: 0.9fr 1fr;
-        gap: 80px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .risk-card {
+        min-height: 228px;
+        padding: 26px;
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(16px);
+      }
+
+      .risk-card h3 {
+        margin: 18px 0 12px;
+        color: #fff;
+      }
+
+      .risk-card p {
+        color: #d8ecf7;
+        line-height: 1.62;
+        margin: 0;
+      }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: 0.85fr 1fr;
+        gap: 48px;
         align-items: center;
       }
 
       .steps {
         display: grid;
-        gap: 0;
+        gap: 12px;
       }
 
       .step {
         display: grid;
-        grid-template-columns: 70px 1fr 28px;
+        grid-template-columns: 64px 1fr;
         gap: 18px;
-        align-items: center;
-        padding: 24px 28px;
-        border-radius: 12px;
-        font-weight: 900;
-      }
-
-      .step.active {
-        background: #f1f4f5;
+        padding: 22px;
+        border-radius: 22px;
+        background: #fff;
+        border: 1px solid var(--line);
+        box-shadow: 0 16px 44px rgba(8, 47, 73, 0.08);
       }
 
       .step-number {
-        color: #b4c1c7;
-        font-size: 38px;
-        font-weight: 900;
+        width: 54px;
+        height: 54px;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        font-family: "Lexend", sans-serif;
+        font-size: 22px;
+        font-weight: 800;
+        color: #fff;
+        background: linear-gradient(135deg, var(--blue), var(--navy-2));
+      }
+
+      .step h3 {
+        margin: 0 0 8px;
+        color: var(--navy);
       }
 
       .step p {
-        margin: 8px 0 0;
+        margin: 0;
         color: var(--muted);
-        font-weight: 500;
         line-height: 1.6;
       }
 
-      .phone-panel {
-        min-height: 430px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, #0a6a38, #0b7f45);
-        overflow: hidden;
+      .phone-stage {
+        min-height: 540px;
+        border-radius: 34px;
+        background:
+          radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.48), transparent 24%),
+          linear-gradient(145deg, #e0f2fe, #ccfbf1);
         position: relative;
-        color: #fff;
-        padding: 48px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
       }
 
       .phone {
         position: absolute;
-        right: 42px;
-        bottom: -44px;
-        width: 250px;
-        height: 470px;
-        border-radius: 36px;
-        background: #101010;
-        padding: 12px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        left: 50%;
+        bottom: -46px;
+        transform: translateX(-50%);
+        width: 276px;
+        height: 548px;
+        padding: 13px;
+        border-radius: 42px;
+        background: #071827;
+        box-shadow: 0 32px 80px rgba(8, 47, 73, 0.34);
       }
 
       .phone-screen {
         height: 100%;
-        border-radius: 28px;
-        background: #f7faf8;
-        color: var(--ink);
+        border-radius: 32px;
+        background: #f8fcff;
         padding: 28px 18px;
+        color: var(--ink);
       }
 
       .phone-screen h4 {
-        margin: 0 0 16px;
-        font-size: 15px;
+        margin: 0 0 18px;
+        font-family: "Lexend", sans-serif;
       }
 
       .phone-item {
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        padding: 11px;
-        margin-bottom: 10px;
-        background: #fff;
-        font-size: 12px;
-        font-weight: 800;
-      }
-
-      .notify {
-        position: absolute;
-        left: 42px;
-        width: 360px;
-        background: #fff;
-        color: var(--ink);
-        border-radius: 10px;
-        padding: 18px;
-        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
-        font-weight: 800;
-      }
-
-      .notify.one {
-        top: 110px;
-      }
-
-      .notify.two {
-        top: 250px;
-      }
-
-      .benefits {
-        background: var(--forest);
-        color: #fff;
-        padding: 92px 0 110px;
-      }
-
-      .tabs {
         display: flex;
-        justify-content: center;
-        gap: 58px;
-        color: rgba(255, 255, 255, 0.56);
-        font-weight: 900;
-        margin-bottom: 78px;
-      }
-
-      .tabs span:first-child {
-        color: #fff;
-        border-bottom: 2px solid var(--green-2);
-        padding-bottom: 13px;
-      }
-
-      .section-title {
-        text-align: center;
-      }
-
-      .benefits .section-title h2,
-      .benefits .section-title p {
-        color: #fff;
-      }
-
-      .benefit-grid {
-        margin-top: 54px;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
-      }
-
-      .benefit-card {
-        min-height: 365px;
-        background: #fff;
-        color: var(--ink);
-        border-radius: 14px;
-        padding: 32px 28px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .benefit-card h3 {
-        margin: 22px 0 12px;
-        font-size: 21px;
-      }
-
-      .benefit-card p {
-        color: var(--muted);
-        line-height: 1.55;
-        margin: 0;
-      }
-
-      .mock-phone-bottom {
-        position: absolute;
-        left: 50%;
-        bottom: -118px;
-        transform: translateX(-50%);
-        width: 150px;
-        height: 250px;
-        border: 7px solid #222;
-        border-radius: 26px;
-        background: #fff;
-      }
-
-      .mock-popup {
-        position: absolute;
-        left: 28px;
-        right: 28px;
-        bottom: 58px;
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.14);
-        padding: 14px;
-        font-size: 12px;
-        font-weight: 900;
-      }
-
-      .testimonials {
-        padding: 88px 0;
-        background: #fff;
-        overflow: hidden;
-      }
-
-      .testimonial-head {
-        display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin-bottom: 44px;
+        justify-content: space-between;
+        min-height: 58px;
+        margin-bottom: 12px;
+        padding: 12px;
+        border-radius: 18px;
+        background: #fff;
+        border: 1px solid var(--line);
+        font-weight: 800;
       }
 
-      .testimonial-head h2 {
-        font-size: 40px;
+      .notify-card {
+        position: absolute;
+        z-index: 2;
+        width: 310px;
+        padding: 18px;
+        border-radius: 20px;
+        background: #fff;
+        color: var(--ink);
+        box-shadow: var(--shadow);
+        font-weight: 800;
+      }
+
+      .notify-card.left {
+        left: 42px;
+        top: 88px;
+      }
+
+      .notify-card.right {
+        right: 34px;
+        top: 238px;
+      }
+
+      .plans {
+        background: #fff;
+      }
+
+      .plan-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .plan-card {
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: #fff;
+        box-shadow: 0 18px 48px rgba(8, 47, 73, 0.08);
+      }
+
+      .plan-card.featured {
+        border-color: rgba(14, 165, 233, 0.45);
+        background: linear-gradient(180deg, #ffffff, #f0f9ff);
+        transform: translateY(-14px);
+      }
+
+      .plan-card h3 {
         margin: 0;
+        color: var(--navy);
       }
 
-      .arrow-buttons {
+      .price {
+        margin: 18px 0;
+        font-family: "Lexend", sans-serif;
+        font-size: 34px;
+        font-weight: 800;
+      }
+
+      .plan-card ul {
+        margin: 0 0 24px;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 12px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .plan-card li {
         display: flex;
         gap: 10px;
       }
 
-      .round {
-        width: 38px;
-        height: 38px;
+      .plan-card li::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        flex: 0 0 10px;
+        margin-top: 8px;
         border-radius: 50%;
-        background: var(--green);
-        color: #fff;
+        background: var(--blue);
+      }
+
+      .proof {
+        background: #fff;
+      }
+
+      .quote-grid {
         display: grid;
-        place-items: center;
-        font-weight: 900;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
       }
 
-      .testimonial-row {
-        display: grid;
-        grid-template-columns: repeat(4, 380px);
-        gap: 28px;
+      .quote {
+        padding: 26px;
+        border-radius: 26px;
+        background: var(--ice);
+        border: 1px solid var(--line);
       }
 
-      .quote-card {
-        background: #f7f8f8;
-        border-radius: 14px;
-        padding: 34px;
-        min-height: 330px;
-      }
-
-      .stars {
-        color: var(--gold);
-        font-size: 20px;
-        margin-bottom: 22px;
-      }
-
-      .quote-card p {
-        color: #1f2e29;
-        line-height: 1.65;
-        font-size: 16px;
-      }
-
-      .quote-card strong {
-        display: block;
-        margin-top: 28px;
-      }
-
-      .trial {
-        background:
-          radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.12), transparent 28%),
-          linear-gradient(135deg, #08884f, #087042);
-        color: #fff;
-        overflow: hidden;
-      }
-
-      .trial-grid {
-        min-height: 370px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: center;
-        gap: 64px;
-      }
-
-      .trial h2 {
-        font-size: 43px;
+      .quote p {
         margin: 0;
-      }
-
-      .trial p {
-        max-width: 520px;
-        line-height: 1.7;
+        color: var(--ink);
         font-size: 18px;
+        line-height: 1.6;
+        font-weight: 700;
       }
 
-      .trial-phone {
-        height: 380px;
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
-        position: relative;
+      .quote strong {
+        display: block;
+        margin-top: 24px;
+        color: var(--navy);
       }
 
       .faq {
-        padding: 86px 0 112px;
+        background: #fff;
       }
 
       .faq-grid {
         display: grid;
-        grid-template-columns: 0.8fr 1.2fr;
-        gap: 90px;
-      }
-
-      .faq h2 {
-        margin: 0;
-        font-size: 43px;
-      }
-
-      .contact-buttons {
-        display: grid;
-        gap: 10px;
-        width: 360px;
-        max-width: 100%;
-        margin-top: 36px;
+        grid-template-columns: 0.85fr 1.15fr;
+        gap: 60px;
       }
 
       details {
-        border-bottom: 1px solid var(--line);
         padding: 22px 0;
+        border-bottom: 1px solid var(--line);
       }
 
       summary {
         cursor: pointer;
+        font-family: "Lexend", sans-serif;
         font-size: 18px;
-        font-weight: 900;
+        font-weight: 700;
+        color: var(--navy);
       }
 
       details p {
-        margin: 18px 0 0;
-        line-height: 1.7;
+        margin: 14px 0 0;
         color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .final-cta {
+        padding: 92px 0;
+        color: #fff;
+        background:
+          radial-gradient(circle at 70% 40%, rgba(56, 189, 248, 0.34), transparent 28%),
+          linear-gradient(135deg, var(--navy), var(--blue));
+      }
+
+      .final-cta .container {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 30px;
+        align-items: center;
+      }
+
+      .final-cta h2 {
+        margin: 0;
+        font-size: 42px;
+      }
+
+      .final-cta p {
+        color: #e3f6ff;
+        font-size: 18px;
+        line-height: 1.6;
       }
 
       footer {
-        background: var(--forest);
-        color: #fff;
-        padding: 72px 0 32px;
-        position: relative;
-        overflow: hidden;
+        padding: 62px 0 34px;
+        color: #dceefa;
+        background: #031827;
       }
 
       .footer-grid {
         display: grid;
-        grid-template-columns: 1.3fr repeat(3, 1fr);
-        gap: 54px;
+        grid-template-columns: 1.4fr repeat(3, 1fr);
+        gap: 40px;
       }
 
       footer h4 {
-        color: #8bb3a4;
-        margin: 0 0 18px;
-        text-transform: uppercase;
-        font-size: 12px;
+        margin: 0 0 16px;
+        color: #8dd7f8;
       }
 
       footer a,
       footer p {
         display: block;
-        color: #fff;
-        margin: 0 0 14px;
+        margin: 0 0 12px;
+        color: #dceefa;
         font-weight: 700;
       }
 
       .copyright {
-        margin-top: 64px;
-        padding-top: 22px;
+        margin-top: 42px;
+        padding-top: 24px;
         border-top: 1px solid rgba(255, 255, 255, 0.12);
-        color: #c0d4ca;
-        font-size: 12px;
+        color: #9fc1d4;
       }
 
       .cookie {
         position: fixed;
-        right: 22px;
-        bottom: 22px;
-        width: min(460px, calc(100% - 44px));
-        background: #fff;
-        border-radius: 14px;
-        padding: 22px;
-        color: var(--ink);
-        box-shadow: 0 20px 70px rgba(0, 0, 0, 0.24);
-        z-index: 60;
+        right: 20px;
+        bottom: 20px;
+        z-index: 80;
+        width: min(440px, calc(100% - 40px));
+        padding: 20px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.88);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
       }
 
       .cookie h3 {
-        margin: 0 0 10px;
+        margin: 0 0 8px;
+        color: var(--navy);
       }
 
       .cookie p {
+        margin: 0;
         color: var(--muted);
-        line-height: 1.55;
-        font-size: 14px;
+        line-height: 1.5;
       }
 
       .cookie-actions {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 12px;
+        gap: 10px;
         margin-top: 14px;
+      }
+
+      :focus-visible {
+        outline: 4px solid rgba(56, 189, 248, 0.7);
+        outline-offset: 3px;
+      }
+
+      @keyframes drift {
+        0% {
+          transform: translate3d(-4%, -2%, 0) rotate(0deg);
+        }
+        100% {
+          transform: translate3d(4%, 2%, 0) rotate(1deg);
+        }
+      }
+
+      @keyframes lift {
+        from {
+          opacity: 0;
+          transform: translateY(26px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes floaty {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          box-shadow: 0 0 0 8px rgba(249, 115, 22, 0.16);
+        }
+        50% {
+          box-shadow: 0 0 0 22px rgba(249, 115, 22, 0.02);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
       }
 
       @media (max-width: 1060px) {
@@ -917,552 +1001,405 @@
 
         .hero-grid,
         .split,
-        .workflow-grid,
-        .trial-grid,
+        .timeline,
         .faq-grid,
+        .final-cta .container,
         .footer-grid {
           grid-template-columns: 1fr;
         }
 
+        .hero h1 {
+          font-size: 52px;
+        }
+
+        .hero-product {
+          min-height: 600px;
+        }
+
+        .dashboard-mock {
+          left: 50%;
+          right: auto;
+          transform: translateX(-50%);
+        }
+
         .trust-grid,
         .feature-grid,
-        .concern-grid,
-        .media-grid {
+        .risk-grid,
+        .plan-grid,
+        .quote-grid {
           grid-template-columns: repeat(2, 1fr);
         }
 
-        .feature-head {
-          display: grid;
-        }
-
-        .hero {
-          min-height: auto;
-        }
-
-        .hero-visual,
-        .image-stack {
-          min-height: 500px;
-        }
-
-        .benefit-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-
-        .tabs {
-          flex-wrap: wrap;
-          gap: 20px;
+        .plan-card.featured {
+          transform: none;
         }
       }
 
-      @media (max-width: 680px) {
+      @media (max-width: 720px) {
         .container {
           width: min(100% - 24px, 1180px);
         }
 
+        .nav {
+          border-radius: 16px;
+        }
+
+        .logo {
+          font-size: 18px;
+        }
+
+        .hero {
+          padding-top: 130px;
+          min-height: auto;
+        }
+
         .hero h1,
-        .intro-copy h2,
-        .section-title h2,
-        .trial h2,
-        .faq h2 {
+        .section-head h2,
+        .final-cta h2 {
           font-size: 34px;
         }
 
-        .hero-grid {
-          gap: 28px;
+        .hero p,
+        .section-head p {
+          font-size: 17px;
         }
 
-        .photo-card,
-        .image-stack img {
+        .hero-product {
+          min-height: auto;
+          display: grid;
+          gap: 12px;
+        }
+
+        .dashboard-mock,
+        .floating-alert,
+        .notify-card,
+        .phone {
           position: relative;
           inset: auto;
           left: auto;
+          right: auto;
           top: auto;
+          bottom: auto;
+          transform: none;
           width: 100%;
-          height: auto;
-          min-height: 320px;
         }
 
-        .hero-visual,
-        .image-stack {
+        .mock-body,
+        .trust-grid,
+        .feature-grid,
+        .risk-grid,
+        .plan-grid,
+        .quote-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .human-card {
           min-height: auto;
         }
 
-        .float-card,
-        .mini-card {
-          position: relative;
-          inset: auto;
+        .human-card img {
           width: 100%;
-          min-width: 0;
-          margin-top: 12px;
+          height: 390px;
         }
 
-        .workflow-grid {
-          gap: 28px;
+        .glass-card {
+          position: relative;
+          width: 100%;
+          right: auto;
+          bottom: auto;
+          margin-top: -40px;
         }
 
-        .phone-panel {
-          padding: 24px;
+        .phone-stage {
+          min-height: auto;
+          padding: 18px;
+          display: grid;
+          gap: 12px;
         }
 
         .phone {
-          position: relative;
-          right: auto;
-          bottom: auto;
-          margin: 22px auto 0;
+          height: 500px;
         }
 
-        .notify {
-          position: relative;
-          inset: auto;
-          width: 100%;
-          margin-top: 12px;
-        }
-
-        .benefit-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .trust-grid,
-        .feature-grid,
-        .concern-grid,
-        .media-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .testimonial-row {
-          grid-template-columns: 1fr;
-        }
-
-        .quote-card {
-          min-height: auto;
+        .cookie {
+          display: none;
         }
       }
     </style>
   </head>
   <body>
+    <a class="skip" href="#conteudo">Pular para o conteudo</a>
+
     <div class="nav-wrap">
       <nav class="container nav" aria-label="Principal">
         <a class="logo" href="#">
-          <span class="logo-mark">G</span>
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M12 3l7 3v5c0 4.7-2.9 8.1-7 10-4.1-1.9-7-5.3-7-10V6l7-3z" />
+              <path d="M9 12l2 2 4-5" />
+            </svg>
+          </span>
           <span>Guardiao 60+</span>
         </a>
         <div class="nav-links">
-          <a href="#como-funciona">Como funciona</a>
-          <a href="#beneficios">Beneficios</a>
+          <a href="#recursos">Recursos</a>
+          <a href="#protege">Protecao</a>
           <a href="#planos">Planos</a>
-          <a href="#depoimentos">Clientes</a>
-          <a href="#duvidas">Contato</a>
+          <a href="#faq">FAQ</a>
         </div>
-        <a class="btn btn-primary" href="/guardiao-60-plus/">Abrir o app</a>
+        <a class="btn btn-primary" href="/guardiao-60-plus/">Abrir app</a>
       </nav>
     </div>
 
-    <header class="hero">
-      <div class="container hero-grid">
-        <div>
-          <span class="kicker">Sistema familiar de cuidado remoto</span>
-          <h1>Cuide da seguranca de quem voce ama sem complicar a rotina.</h1>
-          <p>
-            Guardiao 60+ conecta tag GPS, smartwatch e alertas inteligentes para
-            filhos, cuidadores e clinicas acompanharem idosos com consentimento e
-            linguagem simples.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#planos">Experimentar gratis</a>
-            <a class="btn btn-outline" href="/guardiao-60-plus/">Ver painel</a>
+    <main id="conteudo">
+      <header class="hero">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Plataforma de protecao familiar</span>
+            <h1>Seguranca inteligente para idosos, familia e cuidadores.</h1>
+            <p>
+              GPS 4G, SOS, rotina inteligente, bateria dos dispositivos e alertas
+              por prioridade em um painel claro, consentido e pronto para operacao.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-warning" href="#planos">Comecar demonstracao</a>
+              <a class="btn btn-ghost" href="/guardiao-60-plus/">Ver painel ativo</a>
+            </div>
+            <div class="availability">
+              <span class="pill">iOS e Android</span>
+              <span class="pill">Tag GPS 4G</span>
+              <span class="pill">Smartwatch</span>
+              <span class="pill">WhatsApp/SMS</span>
+              <span class="pill">Painel web</span>
+            </div>
           </div>
-          <div class="available" aria-label="Dispositivos e canais suportados">
-            <span class="platform-pill">iOS e Android</span>
-            <span class="platform-pill">Tag GPS 4G</span>
-            <span class="platform-pill">Smartwatch</span>
-            <span class="platform-pill">WhatsApp</span>
-            <span class="platform-pill">Painel web</span>
+
+          <div class="hero-product" aria-label="Mockup do painel Guardiao 60+">
+            <div class="dashboard-mock">
+              <div class="mock-top">
+                <div class="mock-dots"><span></span><span></span><span></span></div>
+                <strong>Maria Oliveira - Operacao ativa</strong>
+              </div>
+              <div class="mock-body">
+                <div class="mini-panel">
+                  <strong>Status</strong>
+                  <div class="big-stat">Atencao</div>
+                  <span>2 alertas abertos</span>
+                </div>
+                <div class="mini-panel">
+                  <strong>Dispositivos</strong>
+                  <div class="big-stat">17%</div>
+                  <span>tag GPS precisa recarregar</span>
+                </div>
+                <div class="mini-panel wide map-card">
+                  <strong>Localizacao atual</strong>
+                  <div class="big-stat">Farmacia Central</div>
+                  <span>ultima leitura as 14:46</span>
+                  <div class="map-pin"></div>
+                </div>
+              </div>
+            </div>
+            <div class="floating-alert one">
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M12 22s8-5.5 8-13a8 8 0 1 0-16 0c0 7.5 8 13 8 13z" />
+                  <circle cx="12" cy="9" r="2.5" />
+                </svg>
+              </span>
+              <div><b>Saiu da area segura</b><span>Casa - 15:42</span></div>
+            </div>
+            <div class="floating-alert two">
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" />
+                </svg>
+              </span>
+              <div><b>Prioridade alta</b><span>Contato familiar recomendado</span></div>
+            </div>
           </div>
         </div>
+      </header>
 
-        <div class="hero-visual" aria-label="Familia acompanhando um idoso pelo celular">
-          <div class="photo-card">
+      <section class="trust">
+        <div class="container trust-grid">
+          <article class="trust-card"><strong>24/7</strong><span>alertas criticos monitorados</span></article>
+          <article class="trust-card"><strong>3 canais</strong><span>app, WhatsApp e SMS</span></article>
+          <article class="trust-card"><strong>90 dias</strong><span>historico operacional</span></article>
+          <article class="trust-card"><strong>LGPD</strong><span>consentimento e auditoria</span></article>
+        </div>
+      </section>
+
+      <section class="section-pad">
+        <div class="container split">
+          <div class="human-card">
             <img
-              src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1050&q=82"
-              alt="Familia sorrindo enquanto acompanha cuidado pelo celular"
+              src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&w=1000&q=82"
+              alt="Familia acompanhando cuidado de idoso"
             />
-          </div>
-          <div class="float-card float-top"><span>GPS</span>Localizacao atualizada em tempo real</div>
-          <div class="float-card float-mid"><span>SOS</span>Emergencia compartilhada com a familia</div>
-          <div class="float-card float-bottom"><span>IA</span>Rotina fora do padrao detectada</div>
-        </div>
-      </div>
-    </header>
-
-    <section class="trust-strip" aria-label="Numeros do Guardiao 60+">
-      <div class="container trust-grid">
-        <article class="trust-card">
-          <strong>24/7</strong>
-          <span>monitoramento de eventos criticos</span>
-        </article>
-        <article class="trust-card">
-          <strong>3x</strong>
-          <span>canais de alerta: app, WhatsApp e SMS</span>
-        </article>
-        <article class="trust-card">
-          <strong>90 dias</strong>
-          <span>historico operacional configuravel</span>
-        </article>
-        <article class="trust-card">
-          <strong>LGPD</strong>
-          <span>consentimento e auditoria desde o inicio</span>
-        </article>
-      </div>
-    </section>
-
-    <section class="intro" id="como-funciona">
-      <div class="container split">
-        <div class="image-stack">
-          <img
-            src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&w=950&q=82"
-            alt="Cuidadora e familia usando celular com idoso"
-          />
-          <div class="mini-card mini-chart">Rotina em graficos<div class="line-chart"></div></div>
-          <div class="mini-card mini-list">Organize facilmente<br />GPS<br />SOS<br />Saude</div>
-          <div class="mini-card mini-med">Bateria: avise antes de ficar offline</div>
-          <div class="mini-card mini-feel">Como estou me sentindo: familia sabe quando agir</div>
-        </div>
-        <div class="intro-copy">
-          <h2>Ajudamos voce a cuidar da seguranca, rotina e bem-estar da sua familia</h2>
-          <p>
-            Centralize localizacao, status dos dispositivos, areas seguras,
-            alertas de emergencia e sinais basicos de saude em uma experiencia
-            pensada para quem cuida, nao para criar mais uma tarefa para o idoso.
-          </p>
-          <a class="text-link" href="#beneficios">Conheca o Guardiao 60+</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="workflow">
-      <div class="container workflow-grid">
-        <div class="steps">
-          <div class="step active">
-            <span class="step-number">01</span>
-            <div>
-              <strong>Localizacao e cerca virtual</strong>
-              <p>Receba alertas quando o idoso sair de casa, demorar a voltar ou ficar sem sinal.</p>
+            <div class="glass-card">
+              <h3>Idoso sem friccao</h3>
+              <p>O app fica com a familia. O idoso usa apenas tag, relogio e o botao SOS quando precisar.</p>
             </div>
-            <span>›</span>
           </div>
-          <div class="step">
-            <span class="step-number">02</span>
-            <strong>Botao SOS e bateria</strong>
-            <span>›</span>
-          </div>
-          <div class="step">
-            <span class="step-number">03</span>
-            <strong>Indicadores de saude</strong>
-            <span>›</span>
-          </div>
-          <div class="step">
-            <span class="step-number">04</span>
-            <strong>Compartilhamento familiar</strong>
-            <span>›</span>
-          </div>
-        </div>
-
-        <div class="phone-panel">
-          <strong>Para a familia acompanhar</strong>
-          <div class="notify one">Alerta Guardiao: Maria saiu da area Casa as 15:42.</div>
-          <div class="notify two">Bateria da tag em 17%. Recarregar hoje.</div>
-          <div class="phone">
-            <div class="phone-screen">
-              <h4>Guardiao 60+</h4>
-              <div class="phone-item">Status: Atencao</div>
-              <div class="phone-item">Local: Farmacia Central</div>
-              <div class="phone-item">Tag GPS: 17%</div>
-              <div class="phone-item">Watch: 63%</div>
+          <div class="section-head">
+            <h2>O desenho certo para cuidado remoto: protecao sem controle invasivo.</h2>
+            <p>
+              A familia acompanha deslocamento, rotina, bateria, SOS e sinais de atencao.
+              O produto evita promessa medica e foca no que resolve a ansiedade real:
+              saber onde esta, se voltou, se pediu ajuda e quem ja viu o alerta.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#recursos">Explorar recursos</a>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="feature-suite" id="recursos">
-      <div class="container">
-        <div class="feature-head">
-          <h2>Tudo que a familia precisa para acompanhar sem invadir</h2>
-          <p>
-            Inspirado em plataformas de protecao familiar, mas adaptado para
-            idosos: menos controle, mais seguranca consentida, contexto e resposta rapida.
-          </p>
+      <section class="section-pad" id="recursos">
+        <div class="container">
+          <div class="section-head center">
+            <h2>Recursos que transformam alerta em acao.</h2>
+            <p>Adaptamos o melhor de plataformas de protecao familiar para o contexto do idoso: rotina, local, seguranca e consentimento.</p>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-5.5 8-13a8 8 0 1 0-16 0c0 7.5 8 13 8 13z"/><circle cx="12" cy="9" r="2.5"/></svg></span><h3>Lugares salvos</h3><p>Casa, clinica, farmacia e mercado com alertas de chegada, saida e permanencia incomum.</p></article>
+            <article class="feature-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l3-4 3 2 4-6"/></svg></span><h3>Relatorios</h3><p>Resumo diario e semanal para familiares, cuidadores, clinicas e home care acompanharem a mesma verdade.</p></article>
+            <article class="feature-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></span><h3>Rotinas</h3><p>Horarios esperados de saida, retorno, descanso, consulta, farmacia e carregamento.</p></article>
+            <article class="feature-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3l7 3v5c0 4.7-2.9 8.1-7 10-4.1-1.9-7-5.3-7-10V6l7-3z"/></svg></span><h3>Permissoes</h3><p>Perfis por familiar, cuidador, clinica e operacao, com auditoria de visualizacao.</p></article>
+            <article class="feature-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"/><path d="M10 19a2 2 0 0 0 4 0"/></svg></span><h3>Alertas IA</h3><p>Prioridade para SOS, geofence, offline, bateria critica e rotina fora do padrao pessoal.</p></article>
+            <article class="feature-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.11 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.6 2.61a2 2 0 0 1-.45 2.11L8 9.7a16 16 0 0 0 6.3 6.3l1.26-1.26a2 2 0 0 1 2.11-.45c.84.28 1.71.48 2.61.6A2 2 0 0 1 22 16.92z"/></svg></span><h3>Escalonamento</h3><p>Define quem recebe SOS, offline, bateria baixa e saida de area segura por prioridade.</p></article>
+            <article class="feature-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 7h-3V4H7v3H4v13h16V7z"/><path d="M9 12h6"/><path d="M12 9v6"/></svg></span><h3>Kit pronto</h3><p>Hardware configurado, areas seguras ativadas e onboarding operacional guiado.</p></article>
+            <article class="feature-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 14a8 8 0 1 1 16 0"/><path d="M4 14v4a2 2 0 0 0 2 2h2v-8H6a2 2 0 0 0-2 2z"/><path d="M20 14v4a2 2 0 0 1-2 2h-2v-8h2a2 2 0 0 1 2 2z"/></svg></span><h3>Suporte</h3><p>Operacao assistida para familia, clinica e home care no momento de ativacao.</p></article>
+          </div>
         </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <span class="feature-icon">01</span>
-            <h3>Painel de atividades</h3>
-            <p>Resumo diario e semanal de localizacao, saude basica, uso dos dispositivos e alertas.</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">02</span>
-            <h3>Rotinas personalizadas</h3>
-            <p>Horarios esperados de saida, retorno, descanso, consulta, farmacia e carregamento.</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">03</span>
-            <h3>Lugares salvos</h3>
-            <p>Casa, clinica, mercado e farmacia com chegada, saida e permanencia acima do normal.</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">04</span>
-            <h3>Alertas por IA</h3>
-            <p>Priorizacao de eventos fora do padrao pessoal, sem promessa de diagnostico medico.</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">05</span>
-            <h3>Relatorios para familia</h3>
-            <p>Resumo claro para filhos, netos, cuidadores e clinica acompanharem a mesma verdade.</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">06</span>
-            <h3>Escalonamento</h3>
-            <p>Quem recebe SOS, bateria critica, saida de area segura e dispositivo offline.</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">07</span>
-            <h3>Permissoes por papel</h3>
-            <p>Familia, cuidador, clinica e home care com niveis diferentes de visualizacao.</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-icon">08</span>
-            <h3>Kit pronto</h3>
-            <p>Hardware configurado, areas seguras ativadas e onboarding operacional guiado.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="benefits" id="beneficios">
-      <div class="container">
-        <div class="tabs">
-          <span>Vantagens para voce</span>
-          <span>Vantagens para cuidadores</span>
-          <span>Vantagens para clinicas</span>
-          <span>Vantagens para seguradoras</span>
+      <section class="section-pad dark-section" id="protege">
+        <div class="container">
+          <div class="section-head center">
+            <h2>Seguranca tambem e reduzir preocupacoes antes da crise.</h2>
+            <p>O sistema destaca o que merece acao agora e deixa o restante como contexto operacional.</p>
+          </div>
+          <div class="risk-grid">
+            <article class="risk-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-5.5 8-13a8 8 0 1 0-16 0c0 7.5 8 13 8 13z"/></svg></span><h3>Medo de se perder</h3><p>Geofence, historico e localizacao atual reduzem o tempo ate a familia agir.</p></article>
+            <article class="risk-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></span><h3>Dispositivo mudo</h3><p>Alertas de bateria e offline aparecem antes do tracker deixar de enviar sinal.</p></article>
+            <article class="risk-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 8v5l3 3"/><circle cx="12" cy="12" r="9"/></svg></span><h3>Rotina quebrada</h3><p>Demora para voltar, ausencia de movimento e permanencia incomum viram alertas simples.</p></article>
+            <article class="risk-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span><h3>Familia desalinhada</h3><p>Todos veem quem recebeu, quem visualizou e qual proximo contato deve agir.</p></article>
+            <article class="risk-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span><h3>Privacidade</h3><p>Consentimento separado para localizacao e saude, com perfis e auditoria.</p></article>
+            <article class="risk-card"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-7"/></svg></span><h3>Excesso de ruido</h3><p>Prioridade separa informativo, atencao e urgente para reduzir ansiedade.</p></article>
+          </div>
         </div>
-        <div class="section-title">
-          <h2>Beneficios para quem cuida</h2>
-          <p>Menos incerteza, mais contexto e alertas acionaveis.</p>
-        </div>
+      </section>
 
-        <div class="benefit-grid">
-          <article class="benefit-card">
-            <span class="logo-mark">1</span>
-            <h3>Localizacao confiavel</h3>
-            <p>GPS 4G, geofence e historico de deslocamento sem depender do celular do filho.</p>
-            <div class="mock-phone-bottom"></div>
-            <div class="mock-popup">Historico de rotas</div>
-          </article>
-          <article class="benefit-card">
-            <span class="logo-mark">2</span>
-            <h3>Alertas inteligentes</h3>
-            <p>Saida de casa, demora no retorno, offline, bateria baixa e SOS priorizados.</p>
-            <div class="mock-phone-bottom"></div>
-            <div class="mock-popup">SOS acionado</div>
-          </article>
-          <article class="benefit-card">
-            <span class="logo-mark">3</span>
-            <h3>Saude sem exagero</h3>
-            <p>Batimentos, passos e descanso como sinais de atencao, sem promessa de diagnostico.</p>
-            <div class="mock-phone-bottom"></div>
-            <div class="mock-popup">FC fora do padrao</div>
-          </article>
-          <article class="benefit-card">
-            <span class="logo-mark">4</span>
-            <h3>Familia alinhada</h3>
-            <p>Permissoes, contatos de emergencia e registro de quem viu cada alerta.</p>
-            <div class="mock-phone-bottom"></div>
-            <div class="mock-popup">Marina visualizou</div>
-          </article>
-        </div>
-        <div style="text-align:center;margin-top:54px">
-          <a class="btn btn-primary" href="#planos">Experimentar gratis</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="concerns">
-      <div class="container">
-        <h2>Estamos aqui para as preocupacoes reais de quem cuida</h2>
-        <div class="concern-grid">
-          <article class="concern-card">
-            <h3>Medo de desaparecimento</h3>
-            <p>Localizacao, geofence, historico e alerta de permanencia ajudam a agir cedo.</p>
-          </article>
-          <article class="concern-card">
-            <h3>Bateria e dispositivo offline</h3>
-            <p>Alertas antecipados reduzem o risco de perder sinal justamente no deslocamento.</p>
-          </article>
-          <article class="concern-card">
-            <h3>Rotina quebrada</h3>
-            <p>IA compara padrao pessoal: horarios, lugares frequentes, ausencia de movimento e retorno.</p>
-          </article>
-          <article class="concern-card">
-            <h3>Cuidadores desalinhados</h3>
-            <p>Todos veem o mesmo evento, com registro de quem recebeu e quem visualizou.</p>
-          </article>
-          <article class="concern-card">
-            <h3>Excesso de alertas</h3>
-            <p>Classificacao por prioridade evita ansiedade e deixa SOS, offline e geofence no topo.</p>
-          </article>
-          <article class="concern-card">
-            <h3>Privacidade familiar</h3>
-            <p>Consentimento, perfis e auditoria deixam claro quem pode acessar cada dado.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="testimonials" id="depoimentos">
-      <div class="container">
-        <div class="testimonial-head">
-          <h2>O que dizem os primeiros clientes</h2>
-          <div class="arrow-buttons"><span class="round">‹</span><span class="round">›</span></div>
-        </div>
-        <div class="testimonial-row">
-          <article class="quote-card">
-            <div class="stars">★★★★★</div>
-            <p>"Agora sei se meu pai saiu de casa e consigo agir antes de virar desespero."</p>
-            <strong>Silvana Moreira, 55 anos</strong>
-            <span>Rio de Janeiro, RJ</span>
-          </article>
-          <article class="quote-card">
-            <div class="stars">★★★★★</div>
-            <p>"Para home care, o painel deixou a comunicacao com a familia muito mais clara."</p>
-            <strong>Tatiane Paula, 32 anos</strong>
-            <span>Cuidadora - Salvador, BA</span>
-          </article>
-          <article class="quote-card">
-            <div class="stars">★★★★★</div>
-            <p>"Nao e rastreamento escondido. E seguranca combinada com meu pai e com meus irmaos."</p>
-            <strong>Seu Antonio, 72 anos</strong>
-            <span>Belo Horizonte, MG</span>
-          </article>
-          <article class="quote-card">
-            <div class="stars">★★★★★</div>
-            <p>"O alerta de bateria evitou que a tag ficasse muda justamente no dia de consulta."</p>
-            <strong>Ingrid Berger, 42 anos</strong>
-            <span>Niteroi, RJ</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="recognition">
-      <div class="container">
-        <h2>Protecao familiar com padrao de produto serio</h2>
-        <div class="media-grid">
-          <article class="media-card">
-            <strong>Painel claro</strong>
-            <p>Tudo que importa aparece em uma tela: local, bateria, SOS, rotina e responsaveis.</p>
-          </article>
-          <article class="media-card">
-            <strong>Foco em autonomia</strong>
-            <p>O idoso nao precisa aprender aplicativo novo para a familia acompanhar com respeito.</p>
-          </article>
-          <article class="media-card">
-            <strong>Operacao B2B</strong>
-            <p>Clinicas e home care podem monitorar varios idosos com permissao e registro.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="trial" id="planos">
-      <div class="container trial-grid">
-        <div>
-          <h2>Crie sua demonstracao gratuita agora</h2>
-          <p>Teste a experiencia premium com painel familiar, lugares salvos, rotina inteligente e alertas, sem informar cartao.</p>
-          <a class="btn btn-gold" href="mailto:contato@guardiao60mais.com">Comecar sem cartao</a>
-        </div>
-        <div class="trial-phone">
-          <div class="phone">
-            <div class="phone-screen">
-              <h4>Usuario selecionado</h4>
-              <div class="phone-item">Mapa</div>
-              <div class="phone-item">Alertas</div>
-              <div class="phone-item">Familia</div>
-              <div class="phone-item">LGPD</div>
+      <section class="section-pad">
+        <div class="container timeline">
+          <div class="steps">
+            <article class="step"><span class="step-number">01</span><div><h3>Configure o idoso</h3><p>Cadastro, consentimento, familiares autorizados e contatos de emergencia.</p></div></article>
+            <article class="step"><span class="step-number">02</span><div><h3>Ative os lugares salvos</h3><p>Casa, farmacia, clinica, mercado e areas de seguranca com regras por horario.</p></div></article>
+            <article class="step"><span class="step-number">03</span><div><h3>Acompanhe pelo painel</h3><p>Mapa, alertas, saude basica, bateria e registro de visualizacao em uma tela.</p></div></article>
+          </div>
+          <div class="phone-stage">
+            <div class="notify-card left">Alerta: saiu da area Casa as 15:42</div>
+            <div class="notify-card right">Bateria da tag GPS em 17%</div>
+            <div class="phone">
+              <div class="phone-screen">
+                <h4>Guardiao 60+</h4>
+                <div class="phone-item"><span>Status</span><strong>Atencao</strong></div>
+                <div class="phone-item"><span>Local</span><strong>Farmacia</strong></div>
+                <div class="phone-item"><span>Tag GPS</span><strong>17%</strong></div>
+                <div class="phone-item"><span>Watch</span><strong>63%</strong></div>
+              </div>
             </div>
           </div>
-          <div class="notify two">Baixe agora o app</div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="faq" id="duvidas">
-      <div class="container faq-grid">
-        <div>
-          <h2>Ficou com alguma duvida?</h2>
-          <p>Navegue pelas questoes ao lado e fale com nosso time.</p>
-          <div class="contact-buttons">
-            <a class="btn btn-primary" href="https://wa.me/5521993165605">Chamar pelo WhatsApp</a>
-            <a class="btn" style="border-color:var(--green);color:var(--green)" href="mailto:contato@guardiao60mais.com">Entrar em contato</a>
+      <section class="section-pad plans" id="planos">
+        <div class="container">
+          <div class="section-head center">
+            <h2>Planos claros para familia e operacao.</h2>
+            <p>Comece com seguranca e adicione saude, IA e canais conforme a maturidade do cuidado.</p>
+          </div>
+          <div class="plan-grid">
+            <article class="plan-card">
+              <h3>Familiar Basico</h3>
+              <div class="price">R$39,90</div>
+              <ul><li>1 idoso monitorado</li><li>2 familiares</li><li>GPS + geofence</li><li>Alertas do app</li></ul>
+              <a class="btn btn-primary" href="mailto:contato@guardiao60mais.com">Comecar</a>
+            </article>
+            <article class="plan-card featured">
+              <h3>Familiar Completo</h3>
+              <div class="price">R$79,90</div>
+              <ul><li>Ate 5 familiares</li><li>WhatsApp e SMS</li><li>Rotina inteligente</li><li>Saude basica</li></ul>
+              <a class="btn btn-warning" href="mailto:contato@guardiao60mais.com">Testar sem cartao</a>
+            </article>
+            <article class="plan-card">
+              <h3>B2B Care</h3>
+              <div class="price">Sob proposta</div>
+              <ul><li>Clinicas e home care</li><li>Multi-unidade</li><li>Painel operacional</li><li>Onboarding assistido</li></ul>
+              <a class="btn btn-primary" href="mailto:contato@guardiao60mais.com">Solicitar proposta</a>
+            </article>
           </div>
         </div>
-        <div>
-          <details open>
-            <summary>O idoso precisa usar celular?</summary>
-            <p>Nao. O desenho principal usa tag GPS 4G e smartwatch compativel. O app fica com filho, cuidador ou operacao.</p>
-          </details>
-          <details>
-            <summary>Isso faz diagnostico medico?</summary>
-            <p>Nao. O Guardiao 60+ trabalha com seguranca, bem-estar e sinais de atencao. Diagnostico e decisao clinica ficam fora do MVP.</p>
-          </details>
-          <details>
-            <summary>Como funciona o consentimento?</summary>
-            <p>O produto nasce com consentimento separado para localizacao e saude, auditoria de acesso e politica de exclusao.</p>
-          </details>
-          <details>
-            <summary>Serve para clinicas e home care?</summary>
-            <p>Sim. O plano B2B organiza varios idosos monitorados, cuidadores, responsaveis e escalonamento de alertas.</p>
-          </details>
+      </section>
+
+      <section class="section-pad proof">
+        <div class="container">
+          <div class="section-head center">
+            <h2>Protecao familiar com experiencia de produto serio.</h2>
+          </div>
+          <div class="quote-grid">
+            <article class="quote"><p>"Agora eu sei quando meu pai saiu, se voltou e quem da familia ja viu o alerta."</p><strong>Marina, filha cuidadora</strong></article>
+            <article class="quote"><p>"Para home care, o historico de eventos reduz ligacoes repetidas e melhora a resposta."</p><strong>Tatiane, coordenadora de cuidado</strong></article>
+            <article class="quote"><p>"Nao parece vigilancia escondida. E seguranca combinada com minha mae e meus irmaos."</p><strong>Rafael, neto responsavel</strong></article>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="section-pad faq" id="faq">
+        <div class="container faq-grid">
+          <div class="section-head">
+            <h2>Duvidas antes de ativar?</h2>
+            <p>O produto foi pensado para vender seguranca consentida, nao rastreamento escondido.</p>
+            <div class="hero-actions"><a class="btn btn-primary" href="https://wa.me/5521993165605">Falar no WhatsApp</a></div>
+          </div>
+          <div>
+            <details open><summary>O idoso precisa usar celular?</summary><p>Nao. O app fica com o familiar ou cuidador. O idoso usa tag GPS 4G e smartwatch compativel.</p></details>
+            <details><summary>O produto faz diagnostico?</summary><p>Nao. Ele mostra sinais de atencao, rotina e seguranca. Diagnostico medico fica fora do MVP.</p></details>
+            <details><summary>Como funciona a privacidade?</summary><p>Consentimento separado para localizacao e saude, perfis de acesso, logs e exclusao de dados.</p></details>
+            <details><summary>Serve para B2B?</summary><p>Sim. Home care, clinicas, residenciais senior e seguradoras podem operar varios idosos no painel.</p></details>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div class="container">
+          <div>
+            <h2>Crie uma demonstracao premium do Guardiao 60+.</h2>
+            <p>Teste o painel, os alertas e a jornada de cuidado familiar sem informar cartao.</p>
+          </div>
+          <a class="btn btn-warning" href="mailto:contato@guardiao60mais.com">Comecar demo</a>
+        </div>
+      </section>
+    </main>
 
     <footer>
       <div class="container footer-grid">
         <div>
-          <a class="logo" href="#"><span class="logo-mark">G</span><span>Guardiao 60+</span></a>
-          <a class="btn btn-primary" style="margin-top:22px" href="/guardiao-60-plus/">Abrir o app</a>
+          <a class="logo" href="#"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3l7 3v5c0 4.7-2.9 8.1-7 10-4.1-1.9-7-5.3-7-10V6l7-3z" /></svg></span><span>Guardiao 60+</span></a>
+          <p>Seguranca familiar para idosos com GPS, SOS, rotina inteligente e consentimento.</p>
         </div>
-        <div>
-          <h4>A Guardiao</h4>
-          <a href="#como-funciona">Como funciona</a>
-          <a href="#beneficios">Beneficios</a>
-          <a href="#planos">Planos</a>
-          <a href="#duvidas">Contato</a>
-        </div>
-        <div>
-          <h4>Politicas</h4>
-          <a href="#">Termos de uso</a>
-          <a href="#">Politica de privacidade</a>
-          <a href="#">Seguranca de dados</a>
-        </div>
-        <div>
-          <h4>Contato</h4>
-          <a href="mailto:contato@guardiao60mais.com">Contato</a>
-          <a href="/guardiao-60-plus/">Painel demo</a>
-          <a href="#">Voltar ao topo</a>
-        </div>
+        <div><h4>Produto</h4><a href="#recursos">Recursos</a><a href="#protege">Protecao</a><a href="#planos">Planos</a></div>
+        <div><h4>Operacao</h4><a href="/guardiao-60-plus/">Abrir app</a><a href="#faq">FAQ</a><a href="mailto:contato@guardiao60mais.com">Contato</a></div>
+        <div><h4>Legal</h4><a href="#">Privacidade</a><a href="#">Termos</a><a href="#">Seguranca de dados</a></div>
       </div>
       <div class="container copyright">GUARDIAO 60+ - Landing demo de produto - 2026</div>
     </footer>
 
     <aside class="cookie" aria-label="Preferencias de consentimento">
-      <h3>Gerenciar consentimento</h3>
-      <p>Usamos cookies funcionais para melhorar a demonstracao. Dados sensiveis de localizacao e saude exigem consentimento separado no produto real.</p>
-      <div class="cookie-actions">
-        <a class="btn btn-primary" href="#">Aceitar</a>
-        <a class="btn" href="#">Negar</a>
-      </div>
+      <h3>Consentimento</h3>
+      <p>Dados sensiveis de localizacao e saude exigem consentimento separado no produto real.</p>
+      <div class="cookie-actions"><a class="btn btn-primary" href="#">Aceitar</a><a class="btn" href="#">Negar</a></div>
     </aside>
   </body>
 </html>
