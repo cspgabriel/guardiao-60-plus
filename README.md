@@ -5,7 +5,8 @@ Projeto inicial do produto Guardiao 60+ com foco em seguranca familiar para idos
 ## Estrutura
 
 - `guardiao-60-plus-web`: app web publicado no GitHub Pages
-- `docs`: PRD, arquitetura e roadmap do MVP
+- `product-docs`: PRD, arquitetura e roadmap do MVP
+- `docs`: build estatico publicado no GitHub Pages
 - `backend`: base para API de ingestao de dispositivos (fase de implementacao)
 
 ## Execucao local
