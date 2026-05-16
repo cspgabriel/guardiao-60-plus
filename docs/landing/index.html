@@ -133,6 +133,56 @@
         padding: 58px 0 86px;
       }
 
+      .trust-strip {
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        padding: 34px 0;
+      }
+
+      .trust-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        align-items: center;
+      }
+
+      .trust-card {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 20px;
+        min-height: 122px;
+        background: #fff;
+      }
+
+      .trust-card strong {
+        display: block;
+        font-size: 32px;
+        color: var(--forest);
+        margin-bottom: 6px;
+      }
+
+      .trust-card span {
+        color: var(--muted);
+        font-weight: 800;
+      }
+
+      .available {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 24px;
+      }
+
+      .platform-pill {
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        border-radius: 999px;
+        padding: 9px 13px;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
       .hero-grid {
         display: grid;
         grid-template-columns: 1fr 0.96fr;
@@ -238,6 +288,137 @@
 
       .intro {
         padding: 88px 0 80px;
+      }
+
+      .feature-suite {
+        padding: 88px 0;
+        background: #fff;
+      }
+
+      .feature-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 34px;
+        align-items: end;
+        margin-bottom: 34px;
+      }
+
+      .feature-head h2,
+      .concerns h2,
+      .recognition h2 {
+        margin: 0;
+        font-size: 42px;
+        line-height: 1.12;
+        color: var(--forest);
+      }
+
+      .feature-head p {
+        max-width: 460px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+        font-size: 17px;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+
+      .feature-card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--soft);
+        padding: 24px;
+        min-height: 248px;
+      }
+
+      .feature-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: var(--mint);
+        color: var(--green);
+        font-weight: 900;
+        margin-bottom: 20px;
+      }
+
+      .feature-card h3 {
+        margin: 0 0 10px;
+        font-size: 20px;
+      }
+
+      .feature-card p {
+        color: var(--muted);
+        line-height: 1.58;
+        margin: 0;
+      }
+
+      .concerns {
+        padding: 92px 0;
+        background: var(--soft);
+      }
+
+      .concern-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 34px;
+      }
+
+      .concern-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 26px;
+        min-height: 210px;
+      }
+
+      .concern-card h3 {
+        margin: 0 0 10px;
+        color: var(--forest);
+      }
+
+      .concern-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .recognition {
+        padding: 82px 0;
+        background: #fff;
+      }
+
+      .media-grid {
+        margin-top: 34px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .media-card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 26px;
+        background: #fff;
+      }
+
+      .media-card strong {
+        display: block;
+        color: var(--green);
+        margin-bottom: 12px;
+      }
+
+      .media-card p {
+        margin: 0;
+        color: var(--ink);
+        line-height: 1.6;
+        font-size: 17px;
+        font-weight: 800;
       }
 
       .split {
@@ -743,6 +924,17 @@
           grid-template-columns: 1fr;
         }
 
+        .trust-grid,
+        .feature-grid,
+        .concern-grid,
+        .media-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .feature-head {
+          display: grid;
+        }
+
         .hero {
           min-height: auto;
         }
@@ -830,6 +1022,13 @@
           grid-template-columns: 1fr;
         }
 
+        .trust-grid,
+        .feature-grid,
+        .concern-grid,
+        .media-grid {
+          grid-template-columns: 1fr;
+        }
+
         .testimonial-row {
           grid-template-columns: 1fr;
         }
@@ -872,6 +1071,13 @@
             <a class="btn btn-primary" href="#planos">Experimentar gratis</a>
             <a class="btn btn-outline" href="/guardiao-60-plus/">Ver painel</a>
           </div>
+          <div class="available" aria-label="Dispositivos e canais suportados">
+            <span class="platform-pill">iOS e Android</span>
+            <span class="platform-pill">Tag GPS 4G</span>
+            <span class="platform-pill">Smartwatch</span>
+            <span class="platform-pill">WhatsApp</span>
+            <span class="platform-pill">Painel web</span>
+          </div>
         </div>
 
         <div class="hero-visual" aria-label="Familia acompanhando um idoso pelo celular">
@@ -887,6 +1093,27 @@
         </div>
       </div>
     </header>
+
+    <section class="trust-strip" aria-label="Numeros do Guardiao 60+">
+      <div class="container trust-grid">
+        <article class="trust-card">
+          <strong>24/7</strong>
+          <span>monitoramento de eventos criticos</span>
+        </article>
+        <article class="trust-card">
+          <strong>3x</strong>
+          <span>canais de alerta: app, WhatsApp e SMS</span>
+        </article>
+        <article class="trust-card">
+          <strong>90 dias</strong>
+          <span>historico operacional configuravel</span>
+        </article>
+        <article class="trust-card">
+          <strong>LGPD</strong>
+          <span>consentimento e auditoria desde o inicio</span>
+        </article>
+      </div>
+    </section>
 
     <section class="intro" id="como-funciona">
       <div class="container split">
@@ -957,6 +1184,60 @@
       </div>
     </section>
 
+    <section class="feature-suite" id="recursos">
+      <div class="container">
+        <div class="feature-head">
+          <h2>Tudo que a familia precisa para acompanhar sem invadir</h2>
+          <p>
+            Inspirado em plataformas de protecao familiar, mas adaptado para
+            idosos: menos controle, mais seguranca consentida, contexto e resposta rapida.
+          </p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="feature-icon">01</span>
+            <h3>Painel de atividades</h3>
+            <p>Resumo diario e semanal de localizacao, saude basica, uso dos dispositivos e alertas.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon">02</span>
+            <h3>Rotinas personalizadas</h3>
+            <p>Horarios esperados de saida, retorno, descanso, consulta, farmacia e carregamento.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon">03</span>
+            <h3>Lugares salvos</h3>
+            <p>Casa, clinica, mercado e farmacia com chegada, saida e permanencia acima do normal.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon">04</span>
+            <h3>Alertas por IA</h3>
+            <p>Priorizacao de eventos fora do padrao pessoal, sem promessa de diagnostico medico.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon">05</span>
+            <h3>Relatorios para familia</h3>
+            <p>Resumo claro para filhos, netos, cuidadores e clinica acompanharem a mesma verdade.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon">06</span>
+            <h3>Escalonamento</h3>
+            <p>Quem recebe SOS, bateria critica, saida de area segura e dispositivo offline.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon">07</span>
+            <h3>Permissoes por papel</h3>
+            <p>Familia, cuidador, clinica e home care com niveis diferentes de visualizacao.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon">08</span>
+            <h3>Kit pronto</h3>
+            <p>Hardware configurado, areas seguras ativadas e onboarding operacional guiado.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="benefits" id="beneficios">
       <div class="container">
         <div class="tabs">
@@ -1006,6 +1287,38 @@
       </div>
     </section>
 
+    <section class="concerns">
+      <div class="container">
+        <h2>Estamos aqui para as preocupacoes reais de quem cuida</h2>
+        <div class="concern-grid">
+          <article class="concern-card">
+            <h3>Medo de desaparecimento</h3>
+            <p>Localizacao, geofence, historico e alerta de permanencia ajudam a agir cedo.</p>
+          </article>
+          <article class="concern-card">
+            <h3>Bateria e dispositivo offline</h3>
+            <p>Alertas antecipados reduzem o risco de perder sinal justamente no deslocamento.</p>
+          </article>
+          <article class="concern-card">
+            <h3>Rotina quebrada</h3>
+            <p>IA compara padrao pessoal: horarios, lugares frequentes, ausencia de movimento e retorno.</p>
+          </article>
+          <article class="concern-card">
+            <h3>Cuidadores desalinhados</h3>
+            <p>Todos veem o mesmo evento, com registro de quem recebeu e quem visualizou.</p>
+          </article>
+          <article class="concern-card">
+            <h3>Excesso de alertas</h3>
+            <p>Classificacao por prioridade evita ansiedade e deixa SOS, offline e geofence no topo.</p>
+          </article>
+          <article class="concern-card">
+            <h3>Privacidade familiar</h3>
+            <p>Consentimento, perfis e auditoria deixam claro quem pode acessar cada dado.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="testimonials" id="depoimentos">
       <div class="container">
         <div class="testimonial-head">
@@ -1041,12 +1354,32 @@
       </div>
     </section>
 
+    <section class="recognition">
+      <div class="container">
+        <h2>Protecao familiar com padrao de produto serio</h2>
+        <div class="media-grid">
+          <article class="media-card">
+            <strong>Painel claro</strong>
+            <p>Tudo que importa aparece em uma tela: local, bateria, SOS, rotina e responsaveis.</p>
+          </article>
+          <article class="media-card">
+            <strong>Foco em autonomia</strong>
+            <p>O idoso nao precisa aprender aplicativo novo para a familia acompanhar com respeito.</p>
+          </article>
+          <article class="media-card">
+            <strong>Operacao B2B</strong>
+            <p>Clinicas e home care podem monitorar varios idosos com permissao e registro.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="trial" id="planos">
       <div class="container trial-grid">
         <div>
-          <h2>Teste gratis por 30 dias</h2>
-          <p>Conheca a experiencia completa com painel familiar, alertas e configuracao inicial das areas seguras.</p>
-          <a class="btn btn-gold" href="mailto:contato@guardiao60mais.com">Solicitar proposta</a>
+          <h2>Crie sua demonstracao gratuita agora</h2>
+          <p>Teste a experiencia premium com painel familiar, lugares salvos, rotina inteligente e alertas, sem informar cartao.</p>
+          <a class="btn btn-gold" href="mailto:contato@guardiao60mais.com">Comecar sem cartao</a>
         </div>
         <div class="trial-phone">
           <div class="phone">
