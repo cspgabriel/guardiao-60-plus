@@ -1,0 +1,4 @@
+guardiao-60-plus-web/node_modules
+guardiao-60-plus-web/dist
+guardiao-60-plus-web/.env
+*.log
