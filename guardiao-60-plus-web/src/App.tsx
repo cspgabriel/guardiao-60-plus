@@ -1,243 +1,220 @@
-import { useMemo, useState } from 'react'
 import './App.css'
 
-type AlertLevel = 'info' | 'attention' | 'urgent'
-
-type AlertItem = {
-  id: number
-  level: AlertLevel
-  message: string
-  time: string
-  resolved: boolean
-}
-
-type TimelineItem = {
-  time: string
-  place: string
-  event: string
-}
-
-const initialAlerts: AlertItem[] = [
+const modules = [
   {
-    id: 1,
-    level: 'urgent',
-    message: 'SOS acionado as 14:12 perto da Farmacia Central.',
-    time: '14:12',
-    resolved: false,
+    title: 'Modulo 1: Localizacao e seguranca',
+    items: [
+      'Localizacao em tempo real com ultima atualizacao.',
+      'Cerca virtual com alerta de saida e retorno.',
+      'Bateria da tag GPS e status offline.',
+      'SOS com escalonamento para familia.',
+    ],
   },
   {
-    id: 2,
-    level: 'attention',
-    message: 'Bateria da tag GPS em 18%.',
-    time: '13:44',
-    resolved: false,
+    title: 'Modulo 2: Saude basica',
+    items: [
+      'Batimentos, passos e tempo de descanso.',
+      'Uso do relogio e alertas de inatividade.',
+      'Resumo semanal simples para cuidadores.',
+      'Sem diagnostico medico no MVP.',
+    ],
   },
   {
-    id: 3,
-    level: 'info',
-    message: 'Retorno para casa confirmado.',
-    time: '11:31',
-    resolved: true,
+    title: 'Modulo 3: IA de rotina',
+    items: [
+      'Detecta quebra de padrao de deslocamento.',
+      'Prioriza alertas por risco operacional.',
+      'Explica o motivo do alerta em linguagem humana.',
+      'Resumo diario de acompanhamento familiar.',
+    ],
   },
 ]
 
-const timeline: TimelineItem[] = [
-  { time: '08:04', place: 'Casa', event: 'Saida da area segura' },
-  { time: '08:31', place: 'Praca Aurora', event: 'Parada breve' },
-  { time: '09:15', place: 'Farmacia Central', event: 'Permanencia 14 min' },
-  { time: '10:26', place: 'Casa', event: 'Retorno para area segura' },
+const plans = [
+  {
+    name: 'Familiar Basico',
+    price: 'R$ 39,90/mês',
+    items: [
+      '1 idoso monitorado',
+      '2 familiares',
+      'Geofence + alertas',
+      'Historico de deslocamento',
+    ],
+  },
+  {
+    name: 'Familiar Completo',
+    price: 'R$ 79,90/mês',
+    items: [
+      'Ate 5 familiares',
+      'Saude basica integrada',
+      'IA de rotina',
+      'WhatsApp e SMS de alerta',
+    ],
+  },
+  {
+    name: 'B2B Care',
+    price: 'Sob proposta',
+    items: [
+      'Clinicas e home care',
+      'Multi-unidade',
+      'Painel de operacao',
+      'Treinamento e onboarding',
+    ],
+  },
+]
+
+const faq = [
+  {
+    q: 'O idoso precisa usar celular?',
+    a: 'Nao. O fluxo principal usa tag GPS e smartwatch compativel, com app apenas para familiar/cuidador.',
+  },
+  {
+    q: 'Vocês fazem diagnostico medico?',
+    a: 'Nao. O produto trabalha com sinais de atencao e rotina, sem recomendacao clinica automatica.',
+  },
+  {
+    q: 'Como fica LGPD e consentimento?',
+    a: 'Consentimento registrado, controle por perfil de acesso, auditoria de visualizacao e politica de exclusao.',
+  },
+  {
+    q: 'Quando comeca a operacao?',
+    a: 'A operacao inicia com onboarding do kit e configuracao de areas seguras no primeiro dia.',
+  },
 ]
 
 function App() {
-  const [alerts, setAlerts] = useState(initialAlerts)
-  const [showOnlyOpen, setShowOnlyOpen] = useState(false)
-  const [insideSafeArea, setInsideSafeArea] = useState(true)
-  const [watchOnWrist, setWatchOnWrist] = useState(true)
-
-  const openAlerts = useMemo(
-    () => alerts.filter((alert) => !alert.resolved).length,
-    [alerts],
-  )
-
-  const urgentAlerts = useMemo(
-    () =>
-      alerts.filter((alert) => !alert.resolved && alert.level === 'urgent').length,
-    [alerts],
-  )
-
-  const visibleAlerts = useMemo(() => {
-    if (!showOnlyOpen) return alerts
-    return alerts.filter((alert) => !alert.resolved)
-  }, [alerts, showOnlyOpen])
-
-  function resolveAlert(id: number) {
-    setAlerts((current) =>
-      current.map((alert) =>
-        alert.id === id ? { ...alert, resolved: true } : alert,
-      ),
-    )
-  }
-
-  function simulateExitSafeArea() {
-    setInsideSafeArea(false)
-    setAlerts((current) => [
-      {
-        id: Date.now(),
-        level: 'attention',
-        message: 'Idoso saiu da area segura Casa.',
-        time: new Date().toLocaleTimeString('pt-BR', {
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
-        resolved: false,
-      },
-      ...current,
-    ])
-  }
-
-  function simulateSOS() {
-    setAlerts((current) => [
-      {
-        id: Date.now(),
-        level: 'urgent',
-        message: 'SOS acionado no rastreador GPS.',
-        time: new Date().toLocaleTimeString('pt-BR', {
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
-        resolved: false,
-      },
-      ...current,
-    ])
-  }
-
   return (
-    <main className="app-shell">
-      <header className="hero">
-        <div className="hero-head">
-          <p className="eyebrow">Guardiao 60+</p>
-          <span className="pill">MVP operavel</span>
-        </div>
-        <h1>Plataforma familiar de monitoramento para idosos.</h1>
-        <p className="lead">
-          Landing comercial + dashboard funcional de cuidador, pronto para demo
-          real com fluxo de alertas, status dos dispositivos e historico.
+    <main className="page">
+      <header className="hero section">
+        <p className="tag">Guardiao 60+</p>
+        <h1>Seguranca familiar para idosos com monitoramento remoto real.</h1>
+        <p className="subtitle">
+          Plataforma para filho, cuidador e home care acompanharem localizacao,
+          rotina e alertas em um painel unico.
         </p>
+        <div className="hero-cta">
+          <a href="#planos" className="btn btn-primary">
+            Ver planos
+          </a>
+          <a href="#demo" className="btn btn-secondary">
+            Agendar demonstracao
+          </a>
+        </div>
       </header>
 
-      <section className="kpi-grid">
-        <article className="kpi-card">
-          <h2>Status geral</h2>
-          <p className="kpi-value">{urgentAlerts > 0 ? 'Urgente' : 'Atencao'}</p>
-          <p className="kpi-note">{openAlerts} alertas pendentes</p>
-        </article>
-        <article className="kpi-card">
-          <h2>Tag GPS</h2>
-          <p className="kpi-value">18%</p>
-          <p className="kpi-note">Ultima atualizacao: 14:13</p>
-        </article>
-        <article className="kpi-card">
-          <h2>Smartwatch</h2>
-          <p className="kpi-value">64%</p>
-          <p className="kpi-note">FC media: 77 bpm</p>
-        </article>
-        <article className="kpi-card">
-          <h2>Localizacao</h2>
-          <p className="kpi-value">Farmacia Central</p>
-          <p className="kpi-note">-22.9121, -43.2302</p>
-        </article>
+      <section className="section panel">
+        <h2>Dor que resolve</h2>
+        <div className="grid-3">
+          <article>
+            <h3>Familia sem visibilidade</h3>
+            <p>
+              Quando o idoso sai, a familia nao sabe se esta seguro ou se precisa
+              agir.
+            </p>
+          </article>
+          <article>
+            <h3>Alerta tecnico confuso</h3>
+            <p>
+              Mensagens tecnicas geram atraso de resposta. Aqui o alerta sai em
+              linguagem clara.
+            </p>
+          </article>
+          <article>
+            <h3>Operacao sem padrao</h3>
+            <p>
+              Home care e clinicas precisam de trilha de eventos e registro de
+              quem visualizou.
+            </p>
+          </article>
+        </div>
       </section>
 
-      <section className="dashboard-grid">
-        <article className="panel">
-          <h2>Acoes rapidas</h2>
-          <div className="actions">
-            <button type="button" onClick={simulateExitSafeArea}>
-              Simular saida da area segura
-            </button>
-            <button type="button" className="danger" onClick={simulateSOS}>
-              Simular SOS
-            </button>
-            <button type="button">Ligar para idoso</button>
-            <button type="button">Avisar familia</button>
-          </div>
-        </article>
+      <section className="section panel">
+        <h2>Como funciona</h2>
+        <div className="flow">
+          <div>Tag GPS 4G e smartwatch</div>
+          <div>Backend Guardiao 60+</div>
+          <div>App do familiar/cuidador</div>
+          <div>Alertas push/WhatsApp/SMS</div>
+        </div>
+      </section>
 
-        <article className="panel">
-          <h2>Estado da rotina</h2>
-          <div className="toggles">
-            <label>
-              <input
-                type="checkbox"
-                checked={insideSafeArea}
-                onChange={(event) => setInsideSafeArea(event.target.checked)}
-              />
-              Dentro da area segura
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={watchOnWrist}
-                onChange={(event) => setWatchOnWrist(event.target.checked)}
-              />
-              Relogio em uso
-            </label>
-          </div>
-          <p className="routine-status">
-            {insideSafeArea
-              ? 'Rotina em padrao esperado.'
-              : 'Quebra de rotina detectada: fora da area segura.'}
-          </p>
-          <p className="routine-status">
-            {watchOnWrist
-              ? 'Dados de saude recebendo normalmente.'
-              : 'Atencao: sem uso de smartwatch no momento.'}
-          </p>
-        </article>
+      <section className="section panel">
+        <h2>Modulos do produto</h2>
+        <div className="grid-3">
+          {modules.map((module) => (
+            <article key={module.title} className="module">
+              <h3>{module.title}</h3>
+              <ul>
+                {module.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
 
-        <article className="panel panel-wide">
-          <div className="panel-head">
-            <h2>Alertas</h2>
-            <label className="inline-toggle">
-              <input
-                type="checkbox"
-                checked={showOnlyOpen}
-                onChange={(event) => setShowOnlyOpen(event.target.checked)}
-              />
-              Mostrar apenas pendentes
-            </label>
-          </div>
-          <ul className="alert-list">
-            {visibleAlerts.map((alert) => (
-              <li key={alert.id} className={`alert ${alert.level}`}>
-                <div>
-                  <p className="alert-message">{alert.message}</p>
-                  <p className="alert-meta">
-                    {alert.time} - {alert.resolved ? 'Resolvido' : 'Pendente'}
-                  </p>
-                </div>
-                {!alert.resolved && (
-                  <button type="button" onClick={() => resolveAlert(alert.id)}>
-                    Marcar resolvido
-                  </button>
-                )}
-              </li>
-            ))}
-          </ul>
-        </article>
+      <section className="section panel">
+        <h2>Confianca operacional</h2>
+        <div className="grid-2">
+          <article>
+            <h3>LGPD by design</h3>
+            <ul>
+              <li>Consentimento separado para localizacao e saude.</li>
+              <li>Auditoria de acesso por usuario e horario.</li>
+              <li>Politica de retencao e exclusao de dados.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Hardware orientado a campo</h3>
+            <ul>
+              <li>Tag GPS homologada Anatel.</li>
+              <li>Bateria monitorada com alerta antecipado.</li>
+              <li>SOS fisico para acao imediata.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
 
-        <article className="panel panel-wide">
-          <h2>Historico de deslocamento</h2>
-          <ul className="timeline">
-            {timeline.map((item) => (
-              <li key={`${item.time}-${item.place}`}>
-                <span>{item.time}</span>
-                <strong>{item.place}</strong>
-                <p>{item.event}</p>
-              </li>
-            ))}
-          </ul>
-        </article>
+      <section id="planos" className="section panel">
+        <h2>Planos comerciais</h2>
+        <div className="grid-3">
+          {plans.map((plan) => (
+            <article key={plan.name} className="plan">
+              <h3>{plan.name}</h3>
+              <p className="price">{plan.price}</p>
+              <ul>
+                {plan.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section panel">
+        <h2>FAQ</h2>
+        <div className="faq-list">
+          {faq.map((item) => (
+            <article key={item.q} className="faq">
+              <h3>{item.q}</h3>
+              <p>{item.a}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="demo" className="section cta-final">
+        <h2>Pronto para ativar o Guardiao 60+ em operacao real?</h2>
+        <p>
+          Implantacao com checklist, treinamento inicial e configuracao das areas
+          seguras da familia ou unidade de cuidado.
+        </p>
+        <a className="btn btn-primary" href="mailto:contato@guardiao60mais.com">
+          Solicitar proposta
+        </a>
       </section>
     </main>
   )
