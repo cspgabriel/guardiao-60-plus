@@ -1,89 +1,242 @@
 .app-shell {
-  max-width: 1080px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 48px 24px 64px;
+  padding: 30px 18px 64px;
   display: grid;
-  gap: 28px;
+  gap: 16px;
 }
 
 .hero {
-  border: 1px solid #2e4b52;
-  background: linear-gradient(135deg, #0c1d23, #16343b);
+  border: 1px solid #31545f;
   border-radius: 8px;
-  padding: 32px;
-  color: #ecf6f6;
+  background: linear-gradient(130deg, #0e2127, #1f3f47);
+  color: #f0f8f9;
+  padding: 24px;
+}
+
+.hero-head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .eyebrow {
-  margin: 0 0 8px;
-  color: #9ecdd4;
-  font-weight: 700;
+  margin: 0;
   text-transform: uppercase;
   font-size: 12px;
+  color: #9ecdd5;
+  font-weight: 700;
+}
+
+.pill {
+  font-size: 12px;
+  border: 1px solid #85b9c3;
+  border-radius: 999px;
+  padding: 2px 10px;
 }
 
 .hero h1 {
-  margin: 0 0 12px;
-  line-height: 1.15;
-  font-size: clamp(26px, 5vw, 42px);
+  margin: 10px 0 8px;
+  line-height: 1.18;
+  font-size: clamp(26px, 4vw, 40px);
 }
 
 .lead {
-  margin: 0 0 18px;
-  font-size: 17px;
-  color: #d8ecee;
-}
-
-.cta {
-  display: inline-block;
-  text-decoration: none;
-  padding: 10px 16px;
-  border-radius: 6px;
-  border: 1px solid #73aeb9;
-  color: #ecf6f6;
-  background: #225a66;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 14px;
-}
-
-.card {
-  border: 1px solid #c4d8dd;
-  border-radius: 8px;
-  background: #f5fafb;
-  padding: 18px;
-}
-
-.card h2 {
-  margin: 0 0 10px;
-  font-size: 18px;
-  color: #12343b;
-}
-
-.card ul {
   margin: 0;
-  padding-left: 18px;
-  color: #28464d;
+  color: #d6eaed;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+}
+
+.kpi-card {
+  border: 1px solid #d3dfe3;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 14px;
+}
+
+.kpi-card h2 {
+  margin: 0;
+  font-size: 14px;
+  color: #33525a;
+}
+
+.kpi-value {
+  margin: 8px 0 2px;
+  font-size: 22px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #0e2f35;
+}
+
+.kpi-note {
+  margin: 0;
+  font-size: 13px;
+  color: #5d7277;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.panel {
+  border: 1px solid #d3dfe3;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 14px;
+}
+
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: #1f4148;
+}
+
+.panel-wide {
+  grid-column: 1 / -1;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+button {
+  border: 1px solid #b6cad1;
+  border-radius: 6px;
+  background: #f5fafb;
+  color: #22454c;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ebf4f6;
+}
+
+.danger {
+  border-color: #d8a0a0;
+  color: #6a2121;
+  background: #fff4f4;
+}
+
+.toggles {
+  display: grid;
+  gap: 8px;
+  color: #304f56;
+  font-size: 14px;
+}
+
+.toggles label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.routine-status {
+  margin: 10px 0 0;
+  color: #4d646a;
+  font-size: 14px;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.inline-toggle {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 13px;
+  color: #4d6369;
+}
+
+.alert-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
   display: grid;
   gap: 8px;
 }
 
-.status {
-  border: 1px solid #d4dbde;
-  border-radius: 8px;
-  background: #ffffff;
-  padding: 20px;
+.alert {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid #d3dfe3;
+  border-radius: 6px;
+  padding: 10px;
 }
 
-.status h2 {
-  margin: 0 0 8px;
-  color: #112f35;
+.alert.info {
+  background: #f4faf7;
 }
 
-.status p {
-  margin: 4px 0;
-  color: #334b50;
+.alert.attention {
+  background: #fff9f1;
+}
+
+.alert.urgent {
+  background: #fff2f2;
+}
+
+.alert-message {
+  margin: 0;
+  font-size: 14px;
+  color: #243f45;
+}
+
+.alert-meta {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: #60767c;
+}
+
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.timeline li {
+  border: 1px solid #dbe6ea;
+  border-radius: 6px;
+  padding: 10px;
+  display: grid;
+  gap: 2px;
+}
+
+.timeline span {
+  font-size: 12px;
+  color: #60767c;
+}
+
+.timeline strong {
+  font-size: 14px;
+  color: #21444b;
+}
+
+.timeline p {
+  margin: 0;
+  color: #496067;
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
 }
